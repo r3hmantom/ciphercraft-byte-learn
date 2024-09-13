@@ -6,12 +6,7 @@ import { Medal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { text } from "stream/consumers";
-import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import { createClient } from "@/supabase/client";
-import AddUserToSupabase from "../../lib/addUserToSupabase";
-import { redirect } from "next/navigation";
 
 const headingFont = localFont({
   src: "../../public/fonts/calsans.woff2",
