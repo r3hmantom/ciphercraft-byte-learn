@@ -24,9 +24,9 @@ const textFont = Poppins({
 
 const MarektingPage = () => {
   const { user } = useUser()
-  if (user) {
-    redirect('/dashboard')
-  }
+  // if (user) {
+  //   redirect('/dashboard')
+  // }
 
 
 
