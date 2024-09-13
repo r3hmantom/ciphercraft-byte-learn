@@ -4,7 +4,6 @@ import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { useState } from "react";
-import { PiSignOut } from "react-icons/pi";
 
 export const Navbar = () => {
 
@@ -35,16 +34,6 @@ export const Navbar = () => {
         <Logo />
 
         {navUser}
-        {/* {navUser} */}
-        {/* <div className="flex w-full items-center justify-between space-x-4 md:block md:w-auto">
-          <Button size="sm" variant="outline" asChild>
-            <Link href="/sign-in">Login</Link>
-          </Button>
-
-          <Button size="sm" asChild>
-            <Link href="/sign-up">Sign up</Link>
-          </Button>
-        </div> */}
       </div>
     </nav>
   );
