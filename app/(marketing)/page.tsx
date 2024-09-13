@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import localFont from "next/font/local";
 import { Poppins } from "next/font/google";
@@ -6,6 +7,7 @@ import { Medal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { text } from "stream/consumers";
+import { useUser } from "@clerk/nextjs";
 
 const headingFont = localFont({
   src: "../../public/fonts/calsans.woff2",
@@ -17,11 +19,17 @@ const textFont = Poppins({
 });
 
 const MarektingPage = () => {
+
+  const { user } = useUser()
+
+  if(user)
+    console.log(user)
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div
         className={cn(
-          "flex cursor-pointer flex-col items-center justify-center",
+          "flex flex-col items-center justify-center",
           headingFont.className,
         )}
       >
@@ -41,7 +49,7 @@ const MarektingPage = () => {
 
       <div
         className={cn(
-          "mx-auto mt-4 max-w-xs cursor-pointer text-center text-sm text-neutral-400 md:max-w-2xl md:text-xl",
+          "mx-auto mt-4 max-w-xs text-center text-sm text-neutral-400 md:max-w-2xl md:text-xl",
           textFont.className,
         )}
       >
