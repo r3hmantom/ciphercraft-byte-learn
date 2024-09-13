@@ -23,11 +23,7 @@ const textFont = Poppins({
 });
 
 const MarektingPage = () => {
-  const { user } = useUser()
-  // if (user) {
-  //   redirect('/dashboard')
-  // }
-
+  const { isSignedIn } = useUser()
 
 
   return (
@@ -60,9 +56,11 @@ const MarektingPage = () => {
       >
         Learn, manage progress, and reach new learning peaks.
       </div>
-      <Button className="mt-6" size="lg" asChild>
-        <Link href="/sign-up">Get Learn Byte for free</Link>
+      {isSignedIn && (
+        <Button className="mt-6" size="lg" asChild>
+        <Link href="/dashboard">Go to your dashboard</Link>
       </Button>
+      )}
     </div>
   );
 };
