@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CourseCard from './_components/CourseCard';
 import { createClient } from '@/supabase/client';
 import { useUser } from '@clerk/nextjs';
+import AddUserToSupabase from '@/lib/addUserToSupabase';
 
 interface Course {
     name: string;
@@ -18,6 +19,9 @@ const ProgressPage = () => {
     const [userProgress, setUserProgress] = useState<any[]>([])
     const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
 
+    useEffect(() => {
+        AddUserToSupabase()
+    }, [])
 
     const fetchCoursesByIds = async (courseIds: string[]) => {
         try {
