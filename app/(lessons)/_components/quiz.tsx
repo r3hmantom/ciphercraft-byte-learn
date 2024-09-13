@@ -13,7 +13,7 @@ type MCQ = {
   B: string;
   C: string;
   D: string;
-  explanation: string,
+  explanation: string;
   correct: string;
 };
 
@@ -25,6 +25,7 @@ export default function Quiz({ mcqs }: { mcqs: MCQ[] }) {
   const [submitted, setsubmitted] = useState<boolean>(false);
   const [incorrect, setIncorrect] = useState<boolean>(false);
   const [answers, setAnswers] = useState<(string | null)[]>(new Array(mcqs.length).fill(null));
+  const [completed, setcompleted] = useState<boolean>(false);
 
   function handlesub() {
     if (!curroption) {
@@ -39,9 +40,8 @@ export default function Quiz({ mcqs }: { mcqs: MCQ[] }) {
     setIncorrect(!isCorrect);
     setmsg(isCorrect ? "Correct !" : "Incorrect !");
     if (currmcq >= mcqs.length - 1) {
-      console.log("completed the quiz");
+      setcompleted(true);
     }
-    // Save the answer
     const newAnswers = [...answers];
     newAnswers[currmcq] = curroption;
     setAnswers(newAnswers);
@@ -65,7 +65,9 @@ export default function Quiz({ mcqs }: { mcqs: MCQ[] }) {
       setCurrmcq(currmcq - 1);
       setCurroption(answers[currmcq - 1]);
       setsubmitted(answers[currmcq - 1] !== null);
-      setIncorrect(answers[currmcq - 1] !== null && answers[currmcq - 1] !== mcqs[currmcq - 1].correct);
+      setIncorrect(
+        answers[currmcq - 1] !== null && answers[currmcq - 1] !== mcqs[currmcq - 1].correct
+      );
     }
   }
 
@@ -94,7 +96,9 @@ export default function Quiz({ mcqs }: { mcqs: MCQ[] }) {
 
   return (
     <div className="flex flex-col p-5 text-white shadow-lg rounded overflow-hidden bg-gradient-to-r from-violet-500 to-fuchsia-500">
-      <p className="text-sm text-white/70 font-mono">question {currmcq + 1} of {mcqs.length}</p>
+      <p className="text-sm text-white/70 font-mono">
+        question {currmcq + 1} of {mcqs.length}
+      </p>
 
       <AnimatePresence mode="wait">
         <motion.div
@@ -105,15 +109,29 @@ export default function Quiz({ mcqs }: { mcqs: MCQ[] }) {
           transition={{ duration: 0.25 }}
         >
           <p className="text-lg my-2">Q. {mcqs[currmcq].question}</p>
-          <p className={`text-center ${submitted && curroption === mcqs[currmcq].correct ? 'text-green-400' : 'text-red-700'}`}>{msg}</p>
-          {['A', 'B', 'C', 'D'].map((option) => (
-            <div key={option} onClick={() => handleOptionClick(option)} className={getOptionClass(option)}>
-              {curroption == option ? <IoRadioButtonOn /> : <IoIosRadioButtonOff />}
-              <p className="p-2">{option}. {mcqs[currmcq][option as keyof Pick<MCQ, 'A' | 'B' | 'C' | 'D'>]}</p>
+          <p
+            className={`text-center ${
+              submitted && curroption === mcqs[currmcq].correct
+                ? "text-green-400"
+                : "text-red-700"
+            }`}
+          >
+            {msg}
+          </p>
+          {["A", "B", "C", "D"].map((option) => (
+            <div
+              key={option}
+              onClick={() => handleOptionClick(option)}
+              className={getOptionClass(option)}
+            >
+              {curroption === option ? <IoRadioButtonOn /> : <IoIosRadioButtonOff />}
+              <p className="p-2">
+                {option}. {mcqs[currmcq][option as keyof Pick<MCQ, "A" | "B" | "C" | "D">]}
+              </p>
             </div>
           ))}
           {incorrect && submitted && (
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
@@ -122,6 +140,16 @@ export default function Quiz({ mcqs }: { mcqs: MCQ[] }) {
               Explanation: {mcqs[currmcq].explanation}
             </motion.p>
           )}
+          {completed && (
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="text-center text-lg mt-4"
+            >
+              You have completed the Quiz
+            </motion.h1>
+          )}
         </motion.div>
       </AnimatePresence>
 
@@ -129,7 +157,9 @@ export default function Quiz({ mcqs }: { mcqs: MCQ[] }) {
         <button
           onClick={prevmcq}
           disabled={currmcq === 0}
-          className={`px-2 mt-2 bg-white font-gradient-to-r text-purple-600 w-fit p-1.5 rounded mx-auto ${currmcq === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-neutral-200'}`}
+          className={`px-2 mt-2 bg-white font-gradient-to-r text-purple-600 w-fit p-1.5 rounded mx-auto ${
+            currmcq === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-neutral-200"
+          }`}
         >
           <div className="flex items-center">
             <IoIosArrowBack className="size-4 mr-2" />
@@ -139,7 +169,9 @@ export default function Quiz({ mcqs }: { mcqs: MCQ[] }) {
         <button
           onClick={handlesub}
           disabled={submitted}
-          className={`px-2 mt-2 bg-white font-gradient-to-r text-purple-600 w-fit p-1.5 rounded mx-auto ${submitted ? 'opacity-50 cursor-not-allowed' : 'hover:bg-neutral-200'}`}
+          className={`px-2 mt-2 bg-white font-gradient-to-r text-purple-600 w-fit p-1.5 rounded mx-auto ${
+            submitted ? "opacity-50 cursor-not-allowed" : "hover:bg-neutral-200"
+          }`}
         >
           <div className="flex items-center">
             <FaRegCheckCircle className="size-4 mr-2" />
@@ -149,7 +181,9 @@ export default function Quiz({ mcqs }: { mcqs: MCQ[] }) {
         <button
           onClick={nextmcq}
           disabled={currmcq === mcqs.length - 1 && submitted}
-          className={`px-2 mt-2 bg-white font-gradient-to-r text-purple-600 w-fit p-1.5 rounded mx-auto ${currmcq === mcqs.length - 1 && submitted ? 'opacity-50 cursor-not-allowed' : 'hover:bg-neutral-200'}`}
+          className={`px-2 mt-2 bg-white font-gradient-to-r text-purple-600 w-fit p-1.5 rounded mx-auto ${
+            currmcq === mcqs.length - 1 && submitted ? "opacity-50 cursor-not-allowed" : "hover:bg-neutral-200"
+          }`}
         >
           <div className="flex items-center">
             <MdNavigateNext className="size-6" />
