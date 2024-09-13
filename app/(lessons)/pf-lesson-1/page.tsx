@@ -6,7 +6,9 @@ import Quiz from "../_components/quiz"
 import { MdNavigateNext } from "react-icons/md";
 import { useUser } from "@clerk/nextjs"
 import { createClient } from "@/supabase/client"
-import { useEffect, useState } from "react"
+import { AwaitedReactNode, JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react"
+import { div } from "framer-motion/client"
+import { format } from 'date-fns'
 
 type MCQ = {
     question: string,
@@ -18,11 +20,17 @@ type MCQ = {
     correct: string
 }
 
+type comment = {
+    firstname: string
+    content: string
+}
+
 export default function LessonOneLayout() {
 
     const supabase = createClient()
     const { user } = useUser()
     const [completed, setcompleted] = useState<boolean>(false)
+    const [comments, setComments] = useState<any>([]);
 
     const mcqs = [
         {question: "what is a mcq", A: "a",B: "b",C: "c",D: "d",correct: "B", explanation: "this is right hehe"},
@@ -48,6 +56,50 @@ export default function LessonOneLayout() {
         }
     }
 
+    useEffect(() => {
+        (async () => {
+            const { data, error } = await supabase
+                .from('comments')
+                .select()
+                .eq('course', 1)
+                .eq('lesson', 1);
+    
+            if (error) {
+                console.error('Error fetching comments:', error);
+            } else {
+                const commentsWithUsernames = await Promise.all(data.map(async (comment) => {
+                    const { data: userData, error: userError } = await supabase
+                        .from('Users')
+                        .select('fullname')
+                        .eq('id', comment.user_id)
+                        .single()
+    
+                    if (userError) {
+                        console.error('Error fetching user data:', userError);
+                    }
+    
+                    return { ...comment, name: userData?.fullname || 'Student' };
+                }));
+    
+                setComments(commentsWithUsernames);
+            }
+        })();
+    }, []);
+    
+    const cmntmarkup = comments.map((cmnt: any) => {
+        return (
+            <div key={cmnt.id} className="my-2 bg-white shadow-md rounded-lg p-4 mb-4">
+                <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-semibold text-lg text-gray-800">{cmnt.name}</h3>
+                    <span className="text-sm text-gray-500">
+                        {format(new Date(cmnt.created_at), 'MMM d, yyyy h:mm a')}
+                    </span>
+                </div>
+                <p className="text-gray-700">{cmnt.comment}</p>
+            </div>
+        )   
+    })
+
     return (
         <div className="flex flex-col gap-2">
             <h1 className="font-extrabold text-center text-xl">Thinking in Code Lesson 1: Variables</h1>
@@ -63,6 +115,10 @@ export default function LessonOneLayout() {
             <h1 className="font-extrabold text-center text-xl">Quiz: </h1>
             <Quiz mcqs={mcqs} setC={setcompleted}/>
             <button onClick={nextlesson} disabled={!completed}><div className={`flex items-center border-[1px] ml-auto mt-5 rounded border-black hover:bg-neutral-200 w-fit p-2 ${!completed? "cursor-not-allowed hover:bg-transparent border-gray-500 text-gray-500":""}`}><MdNavigateNext/>Next Lesson </div></button>
+            <div className="mt-5">
+                <h1 className="font-extrabold text-center text-xl">Questions:</h1>
+                {cmntmarkup}
+            </div>
         </div>
     )
 } 
