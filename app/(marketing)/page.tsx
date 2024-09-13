@@ -47,7 +47,7 @@ const MarektingPage = () => {
           textFont.className,
         )}
       >
-        Learn, manage progress, and reach new learning peaks. 
+        Learn, manage progress, and reach new learning peaks.
       </div>
       <Button className="mt-6" size="lg" asChild>
         <Link href="/sign-up">Get Learn Byte for free</Link>
