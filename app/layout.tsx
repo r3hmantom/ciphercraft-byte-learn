@@ -6,6 +6,7 @@ import { ClerkProvider, useUser } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -25,7 +26,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <ClerkProvider>
       <html lang="en">
