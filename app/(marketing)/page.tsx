@@ -7,7 +7,6 @@ import { Medal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { text } from "stream/consumers";
-import { useUser } from "@clerk/nextjs";
 
 const headingFont = localFont({
   src: "../../public/fonts/calsans.woff2",
@@ -19,11 +18,6 @@ const textFont = Poppins({
 });
 
 const MarektingPage = () => {
-
-  const { user } = useUser()
-
-  if(user)
-    console.log(user)
 
   return (
     <div className="flex flex-col items-center justify-center">
