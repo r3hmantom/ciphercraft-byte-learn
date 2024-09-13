@@ -90,6 +90,10 @@ export default function LessonOneLayout() {
 
     async function addcomment(e: any) {
         e.preventDefault()
+        if(value.trim() === "") {
+            console.log("no value in comment")
+            return;
+        }
         console.log("addedcomment")
         const newComment = [
             {
@@ -103,6 +107,7 @@ export default function LessonOneLayout() {
         const { error } = await supabase
             .from('comments')
             .insert(newComment)
+        setComments([...comments, {course: 1, lesson: 1, user_id: user?.id, comment: value, created_at: new Date(), name: user?.fullName || 'Student' }])
         if(error) {
             console.log(error)
         }
@@ -141,8 +146,7 @@ export default function LessonOneLayout() {
             <div className="mt-5">
                 <h1 className="font-extrabold text-center text-xl">Questions:</h1>
                 <form onSubmit={addcomment} className=" my-2 flex gap-2 items-center bg-white shadow-md rounded-lg p-4 mb-4">
-                    <label className="whitespace-nowrap">Enter a Comment: </label>
-                    <input value={value} onChange={e => setValue(e.target.value)} type="text" className="rounded p-2 w-full" />
+                    <input placeholder="Enter a Comment..." value={value} onChange={e => setValue(e.target.value)} type="text" className="rounded p-2 w-full" />
                     <button type="submit"><IoSend className="size-5"/></button>
                 </form>
                 {cmntmarkup}
