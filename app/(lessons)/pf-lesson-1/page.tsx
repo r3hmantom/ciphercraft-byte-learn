@@ -6,9 +6,10 @@ import Quiz from "../_components/quiz"
 import { MdNavigateNext } from "react-icons/md";
 import { useUser } from "@clerk/nextjs"
 import { createClient } from "@/supabase/client"
-import { AwaitedReactNode, JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react"
+import { AwaitedReactNode, FormEvent, JSXElementConstructor, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react"
 import { div } from "framer-motion/client"
 import { format } from 'date-fns'
+import { IoSend } from "react-icons/io5";
 
 type MCQ = {
     question: string,
@@ -31,6 +32,7 @@ export default function LessonOneLayout() {
     const { user } = useUser()
     const [completed, setcompleted] = useState<boolean>(false)
     const [comments, setComments] = useState<any>([]);
+    const [value, setValue] = useState<string>("")
 
     const mcqs = [
         {question: "what is a mcq", A: "a",B: "b",C: "c",D: "d",correct: "B", explanation: "this is right hehe"},
@@ -85,6 +87,27 @@ export default function LessonOneLayout() {
             }
         })();
     }, []);
+
+    async function addcomment(e: any) {
+        e.preventDefault()
+        console.log("addedcomment")
+        const newComment = [
+            {
+              course: 1,
+              lesson: 1,
+              user_id: user?.id,
+              comment: value
+            }
+          ];
+          
+        const { error } = await supabase
+            .from('comments')
+            .insert(newComment)
+        if(error) {
+            console.log(error)
+        }
+        setValue("")
+    }
     
     const cmntmarkup = comments.map((cmnt: any) => {
         return (
@@ -117,6 +140,11 @@ export default function LessonOneLayout() {
             <button onClick={nextlesson} disabled={!completed}><div className={`flex items-center border-[1px] ml-auto mt-5 rounded border-black hover:bg-neutral-200 w-fit p-2 ${!completed? "cursor-not-allowed hover:bg-transparent border-gray-500 text-gray-500":""}`}><MdNavigateNext/>Next Lesson </div></button>
             <div className="mt-5">
                 <h1 className="font-extrabold text-center text-xl">Questions:</h1>
+                <form onSubmit={addcomment} className=" my-2 flex gap-2 items-center bg-white shadow-md rounded-lg p-4 mb-4">
+                    <label className="whitespace-nowrap">Enter a Comment: </label>
+                    <input value={value} onChange={e => setValue(e.target.value)} type="text" className="rounded p-2 w-full" />
+                    <button type="submit"><IoSend className="size-5"/></button>
+                </form>
                 {cmntmarkup}
             </div>
         </div>
