@@ -1,6 +1,7 @@
 import Sidebar from "@/app/(platform)/dashboard/_components/Sidebar"
 import CodeSnippet from "../_components/codesnippet"
 import Note from "../_components/note"
+import Quiz from "../_components/quiz"
 
 type MCQ = {
     question: string,
@@ -8,10 +9,17 @@ type MCQ = {
     B: string,
     C: string,
     D: string,
+    explanation: string,
     correct: string
 }
 
 export default function LessonOneLayout() {
+
+    const mcqs = [
+        {question: "what is a mcq", A: "a",B: "b",C: "c",D: "d",correct: "B", explanation: "this is right hehe"},
+        {question: "what is a mcq2", A: "a2",B: "b2",C: "c2",D: "d2",correct: "B", explanation: "this is right hehe"},
+        {question: "what is a mcq3", A: "a3",B: "b3",C: "c3",D: "d3",correct: "B", explanation: "this is right hehe"}
+    ]
 
 
     return (
@@ -27,7 +35,7 @@ export default function LessonOneLayout() {
             <p className="font-semibold">Numbers: </p>
             <p>int represents integer values without decimal points, while float represents numbers with decimal points for more precision.</p>
             <h1 className="font-extrabold text-center text-xl">Quiz: </h1>
-
+            <Quiz mcqs={mcqs}/>
         </div>
     )
 } 
