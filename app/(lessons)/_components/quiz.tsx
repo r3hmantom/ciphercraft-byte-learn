@@ -17,7 +17,7 @@ type MCQ = {
   correct: string;
 };
 
-export default function Quiz({ mcqs }: { mcqs: MCQ[] }) {
+export default function Quiz({ mcqs, setC }: { mcqs: MCQ[], setC: any }) {
   const [currmcq, setCurrmcq] = useState<number>(0);
   const [curroption, setCurroption] = useState<string | null>(null);
   const [correct, setCorrect] = useState<number>(0);
@@ -41,6 +41,7 @@ export default function Quiz({ mcqs }: { mcqs: MCQ[] }) {
     setmsg(isCorrect ? "Correct !" : "Incorrect !");
     if (currmcq >= mcqs.length - 1) {
       setcompleted(true);
+      setC(true)
     }
     const newAnswers = [...answers];
     newAnswers[currmcq] = curroption;

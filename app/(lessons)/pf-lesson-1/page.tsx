@@ -6,6 +6,7 @@ import Quiz from "../_components/quiz"
 import { MdNavigateNext } from "react-icons/md";
 import { useUser } from "@clerk/nextjs"
 import { createClient } from "@/supabase/client"
+import { useEffect, useState } from "react"
 
 type MCQ = {
     question: string,
@@ -21,6 +22,7 @@ export default function LessonOneLayout() {
 
     const supabase = createClient()
     const { user } = useUser()
+    const [completed, setcompleted] = useState<boolean>(false)
 
     const mcqs = [
         {question: "what is a mcq", A: "a",B: "b",C: "c",D: "d",correct: "B", explanation: "this is right hehe"},
@@ -59,8 +61,8 @@ export default function LessonOneLayout() {
             <p className="font-semibold">Numbers: </p>
             <p>int represents integer values without decimal points, while float represents numbers with decimal points for more precision.</p>
             <h1 className="font-extrabold text-center text-xl">Quiz: </h1>
-            <Quiz mcqs={mcqs}/>
-            <button onClick={nextlesson}><div className="flex items-center border-[1px] ml-auto mt-5 rounded border-black hover:bg-neutral-200 w-fit p-2"><MdNavigateNext/>Next Lesson </div></button>
+            <Quiz mcqs={mcqs} setC={setcompleted}/>
+            <button onClick={nextlesson} disabled={!completed}><div className={`flex items-center border-[1px] ml-auto mt-5 rounded border-black hover:bg-neutral-200 w-fit p-2 ${!completed? "cursor-not-allowed hover:bg-transparent border-gray-500 text-gray-500":""}`}><MdNavigateNext/>Next Lesson </div></button>
         </div>
     )
 } 
