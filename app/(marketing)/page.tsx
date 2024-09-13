@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import localFont from "next/font/local";
 import { Poppins } from "next/font/google";
@@ -6,6 +7,7 @@ import { Medal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { text } from "stream/consumers";
+import { useUser } from "@clerk/nextjs";
 
 const headingFont = localFont({
   src: "../../public/fonts/calsans.woff2",
@@ -17,6 +19,14 @@ const textFont = Poppins({
 });
 
 const MarektingPage = () => {
+
+  const { isSignedIn, user, isLoaded } = useUser()
+
+  if (isSignedIn) {
+    console.log(user); // This will log the current user
+    console.log(user.emailAddresses[0].emailAddress)
+  }
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div
