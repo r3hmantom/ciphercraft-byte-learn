@@ -36,14 +36,16 @@ const MarektingPage = () => {
       >
         <div className="mb-4 flex items-center rounded-full bg-amber-100 p-4 uppercase text-amber-700 shadow-sm">
           <Medal className="mr-2 h-6 w-6" />
-          No 1 Learning Platform
+          <span className="pt-1">
+            No 1 Learning Platform
+          </span>
         </div>
 
         <h1 className="mb-6 text-center text-3xl text-neutral-800 md:text-6xl">
           Byte Learn helps you learn better
         </h1>
 
-        <div className="w-fit rounded-md bg-gradient-to-r from-fuchsia-600 to-pink-600 p-2 px-4 text-3xl lowercase text-white md:text-6xl">
+        <div className="w-fit rounded-md bg-gradient-to-r from-fuchsia-600 to-pink-600 p-2 px-4 text-3xl lowercase text-white md:text-6xl pt-4">
           learn Forward
         </div>
       </div>

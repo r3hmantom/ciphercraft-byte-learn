@@ -1,3 +1,6 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
 import {
     Bell,
     Home,
@@ -11,6 +14,22 @@ import Link from "next/link";
 import React from "react";
 
 export default function Sidebar() {
+    const pathname = usePathname()
+    const links = [
+        {
+            name: "Dashboard",
+            href: "/dashboard",
+            icon: Home
+        },
+        {
+            name: "Courses",
+            href: "/dashboard/courses",
+            icon: Package
+        }
+    ]
+
+    console.log(pathname);
+
     return (
         <aside className="hidden border-r border-gray-200 bg-white md:block">
             <div className="flex h-full max-h-screen flex-col gap-2">
@@ -22,21 +41,20 @@ export default function Sidebar() {
                 </div>
                 <div className="flex-1">
                     <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-                        <Link
-                            href="/dashboard"
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-600 hover:bg-gray-100 transition-all"
-                        >
-                            <Home className="h-4 w-4 text-gray-600" />
-                            Dashboard
-                        </Link>
-
-                        <Link
-                            href="/dashboard/courses"
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 bg-gray-100 text-gray-900 transition-all"
-                        >
-                            <Package className="h-4 w-4 text-gray-900" />
-                            Courses
-                        </Link>
+                        {
+                            links.map((link, index) => {
+                                const Icon = link.icon
+                                return (
+                                    <Link
+                                        href={link.href}
+                                        className={`${pathname == link.href ? "bg-gray-100" : ""} mb-1 flex items-center gap-3 rounded-lg px-3 py-2 text-gray-600 hover:bg-gray-100 transition-all`}
+                                    >
+                                        <Icon className="h-4 w-4 text-gray-600" />
+                                        {link.name}
+                                    </Link>
+                                )
+                            })
+                        }
                     </nav>
                 </div>
             </div>
