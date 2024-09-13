@@ -22,7 +22,11 @@ const textFont = Poppins({
 
 const MarektingPage = () => {
 
-  const { user } = useUser();
+  const { user } = useUser() 
+  if(user) {
+    window.location.href = "/dashboard"
+  }
+
   const supabase = createClient()
   const [signup, setSignUp] = useState(false)
 
