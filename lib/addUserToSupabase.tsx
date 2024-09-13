@@ -1,13 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react";
-import { useUser } from "@clerk/nextjs";
 import { createClient } from "@/supabase/client";
 
-export default async function AddUserToSupabase() {
-
+export default async function AddUserToSupabase(user: any, isSignedIn: boolean) {
     const supabase = createClient()
-    const { user } = useUser()
 
     const newUser = {
         id: user?.id,
