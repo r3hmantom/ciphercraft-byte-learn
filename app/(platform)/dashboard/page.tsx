@@ -15,12 +15,12 @@ interface Course {
 
 const ProgressPage = () => {
     const supabase = createClient()
-    const { user } = useUser()
+    const { user , isSignedIn } = useUser()
     const [userProgress, setUserProgress] = useState<any[]>([])
     const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
 
     useEffect(() => {
-        AddUserToSupabase()
+        AddUserToSupabase(user, isSignedIn || false)
     }, [])
 
     const fetchCoursesByIds = async (courseIds: string[]) => {
