@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export const Navbar = () => {
 
-  const { isSignedIn } = useUser();
+  const { isSignedIn, isLoaded } = useUser();
 
 
   return (
@@ -18,7 +18,7 @@ export const Navbar = () => {
         {isSignedIn && <UserButton />}
 
 
-        {!isSignedIn && (
+        {!isSignedIn && isLoaded && (
           <div className="flex w-full items-center justify-between space-x-4 md:block md:w-auto">
             <Button size="sm" variant="outline" asChild>
               <Link href="/sign-in">Login</Link>

@@ -23,7 +23,7 @@ const textFont = Poppins({
 });
 
 const MarektingPage = () => {
-  const { isSignedIn } = useUser()
+  const { isSignedIn, isLoaded } = useUser()
 
 
   return (
@@ -56,10 +56,10 @@ const MarektingPage = () => {
       >
         Learn, manage progress, and reach new learning peaks.
       </div>
-      {isSignedIn && (
+      {isSignedIn && isLoaded && (
         <Button className="mt-6" size="lg" asChild>
-        <Link href="/dashboard">Go to your dashboard</Link>
-      </Button>
+          <Link href="/dashboard">Go to your dashboard</Link>
+        </Button>
       )}
     </div>
   );
