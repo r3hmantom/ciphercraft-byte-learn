@@ -1,6 +1,5 @@
 import React from 'react';
 import {CourseCard} from './courseCard';  // Assuming CourseCard is in the same directory
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 
 interface CourseProps {

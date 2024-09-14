@@ -10,7 +10,7 @@ const Quiz = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center">
       <h2 className="text-2xl mb-4">Quiz Time</h2>
       <p>If x = 10 and y = x + 5, what is the value of y?</p>
       <input
