@@ -17,7 +17,57 @@ type MCQ = {
   correct: string;
 };
 
-export default function Quiz({ mcqs, setC }: { mcqs: MCQ[], setC: any }) {
+
+const _mcqs: MCQ[] = [
+  {
+    question: "What is the main purpose of a variable in programming?",
+    A: "To store data",
+    B: "To perform calculations",
+    C: "To display information",
+    D: "To write comments",
+    explanation: "Variables are used to store data that can be used and manipulated throughout the program.",
+    correct: "A"
+  },
+  {
+    question: "Which of the following is a correct way to declare a variable in JavaScript?",
+    A: "let x = 10;",
+    B: "var x: 10;",
+    C: "int x = 10;",
+    D: "declare x 10;",
+    explanation: "`let` and `var` are both valid ways to declare a variable in JavaScript. The correct syntax is `let x = 10;`.",
+    correct: "A"
+  },
+  {
+    question: "Which of the following is a valid variable name in JavaScript?",
+    A: "1variable",
+    B: "var_name",
+    C: "let",
+    D: "function",
+    explanation: "Variable names in JavaScript can't start with a number, and reserved keywords like `let` and `function` can't be used as variable names.",
+    correct: "B"
+  },
+  {
+    question: "What type of value does the following JavaScript variable hold? `let isActive = true;`",
+    A: "Number",
+    B: "String",
+    C: "Boolean",
+    D: "Array",
+    explanation: "`true` is a Boolean value, which represents either `true` or `false`.",
+    correct: "C"
+  },
+  {
+    question: "What keyword is used to define a constant variable in JavaScript?",
+    A: "let",
+    B: "var",
+    C: "const",
+    D: "constant",
+    explanation: "`const` is used to declare variables that cannot be reassigned after their initial assignment.",
+    correct: "C"
+  }
+];
+
+
+export default function Quiz({ mcqs = _mcqs, setC }: { mcqs: MCQ[], setC: any }) {
   const [currmcq, setCurrmcq] = useState<number>(0);
   const [curroption, setCurroption] = useState<string | null>(null);
   const [correct, setCorrect] = useState<number>(0);
