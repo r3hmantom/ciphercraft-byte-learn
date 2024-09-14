@@ -1,6 +1,8 @@
 "use client"
-import React, { useEffect, useState } from "react"
-import { CourseList } from "./_components/courseList"
+import React, { useEffect , useState  } from "react"
+import {CourseList} from "./_components/courseList"
+import { createClient } from "@/supabase/client"
+
 
 
 const CoursePage = () => {
@@ -19,6 +21,25 @@ const CoursePage = () => {
     fetchCourses()
   }, [])
   const [courses, setCourses] = useState<any[]>([]);
+
+    return (
+    <>
+     <div>
+        <CourseList courses={courses} />
+     </div>
+     </>
+    )
+}
+
+export default CoursePage
+"use client"
+import React, { useEffect, useState } from "react"
+import { CourseList } from "./_components/courseList"
+
+
+const CoursePage = () => {
+
+  const [courses, setCourses] = useState([]);
 
   return (
     <div className="container mx-auto p-4">
