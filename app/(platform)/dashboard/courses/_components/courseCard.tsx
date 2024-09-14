@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import Link from 'next/link';
+import { createClient } from '@/supabase/client';
 
 interface CourseProps {
     id: string;
@@ -13,6 +14,9 @@ interface CourseProps {
 };
 
 const CourseCard = ({ course }: { course: CourseProps }) => {
+    const supabase = createClient()
+
+    const [link, setLink] = useState("courses/programming/lesson-1")
     return (
         <Link href="courses/programming/lesson-1" >
             <Card className="w-full max-w-sm overflow-hidden">
@@ -27,9 +31,9 @@ const CourseCard = ({ course }: { course: CourseProps }) => {
                     <h3 className="text-lg font-semibold mb-2">{course.name}</h3>
                     <div className="flex items-center justify-between mb-2">
                         <span className="text-sm text-gray-600">Progress</span>
-                        <span className="text-sm font-medium">{course.progress}%</span>
+                        <span className="text-sm font-medium">{course.progress}</span>
                     </div>
-                    <Progress value={course.progress} className="w-full" />
+                    <Progress value={course.progress.match(/\d+/g)} className="w-full" />
                 </CardContent>
                 <CardFooter className="bg-gray-50 p-4">
                     <button className="text-blue-600 hover:text-blue-800 font-medium">
@@ -42,3 +46,7 @@ const CourseCard = ({ course }: { course: CourseProps }) => {
 };
 
 export { CourseCard };
+
+function fetchCoursesByIds(courseIDs: any) {
+    throw new Error('Function not implemented.');
+}

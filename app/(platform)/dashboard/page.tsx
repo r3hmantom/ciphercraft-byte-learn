@@ -21,8 +21,8 @@ const ProgressPage = () => {
     const [enrolledCourses, setEnrolledCourses] = useState<Course[]>([]);
 
     useEffect(() => {
-        AddUserToSupabase(user, isSignedIn || false)
     }, [])
+    AddUserToSupabase(user, isSignedIn || false)
 
     const fetchCoursesByIds = async (courseIds: string[]) => {
         try {
